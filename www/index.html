@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>k3v.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#d9480f">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#faf8f5;--card:#fff;--text:#1f1d1a;--muted:#7a746b;--line:#e8e3da;--accent:#d9480f;--soft:#fdeee6;--star:#f0a500}
+@media (prefers-color-scheme:dark){:root{--bg:#141210;--card:#211e1b;--text:#f2eee8;--muted:#9b948a;--line:#35312c;--accent:#ff8a50;--soft:#3a2418}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;padding:env(safe-area-inset-top) 0 calc(64px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;gap:10px;padding:14px 16px 6px;max-width:700px;margin:0 auto}
+.logo{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#ff8a50,#b03008);color:#fff;font:700 21px/34px Georgia,serif;text-align:center}
+h1{font-size:20px;margin:0;flex:1}
+.gear{border:0;background:none;font-size:22px;cursor:pointer;color:var(--text)}
+main{max-width:700px;margin:0 auto;padding:0 16px}
+input[type=text],input[type=password]{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);font-size:16px}
+input:focus{outline:2px solid var(--accent);outline-offset:-1px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.chips button{flex:none;border:1px solid var(--line);background:var(--card);color:var(--muted);padding:7px 14px;border-radius:99px;font-size:13px;cursor:pointer}
+.chips button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:12px}
+.card{cursor:pointer}
+.card img,.ph{width:100%;aspect-ratio:2/3;border-radius:10px;object-fit:cover;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:30px}
+.card .t{font-size:13px;margin-top:5px;line-height:1.25}
+.card .d{font-size:11px;color:var(--muted)}
+.card .v{font-size:11px;color:var(--star);font-weight:600}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom);z-index:5}
+nav button{flex:1;border:0;background:none;color:var(--muted);padding:10px 4px 8px;font-size:12px;cursor:pointer}
+nav button b{display:block;font-size:20px;font-weight:400}
+nav button.on{color:var(--accent);font-weight:700}
+.msg{text-align:center;color:var(--muted);padding:32px 12px;font-size:14px;line-height:1.5}
+.err{color:#c92a2a}
+.btn{border:0;background:var(--accent);color:#fff;border-radius:10px;padding:12px 16px;font-size:15px;font-weight:600;cursor:pointer;display:block;width:100%;text-align:center;text-decoration:none}
+.btn.g{background:var(--card);color:var(--text);border:1px solid var(--line)}
+.sheet{position:fixed;inset:0;background:var(--bg);overflow-y:auto;z-index:10;display:none;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+.sheet.open{display:block}
+.sin{max-width:700px;margin:0 auto;padding:8px 16px 56px}
+.back{border:0;background:none;color:var(--accent);font-size:16px;padding:8px 0;cursor:pointer}
+.hero{text-align:center}
+.hero img,.hero .ph{width:190px;height:285px;aspect-ratio:auto;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);margin:0 auto}
+.hero h2{font-family:Georgia,serif;font-size:24px;margin:14px 0 4px}
+.meta{font-size:13px;color:var(--muted)}
+.badge{display:inline-block;background:var(--soft);color:var(--accent);font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;margin-right:6px}
+.star{color:var(--star);font-weight:700}
+p.o{line-height:1.55;font-size:15px}
+.btns{display:grid;gap:8px;margin:14px 0}
+.stars{text-align:center}.stars button{border:0;background:none;font-size:30px;color:var(--line);cursor:pointer}.stars button.on{color:var(--star)}
+h3{font-family:Georgia,serif;margin:22px 0 8px}
+.season{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.sh{display:flex;justify-content:space-between;align-items:center;padding:12px;cursor:pointer}
+.eps{border-top:1px solid var(--line);padding:6px 12px 12px}
+.ep{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
+.ep:last-child{border-bottom:0}
+.ep input{width:20px;height:20px;accent-color:var(--accent);flex:none;margin-top:2px}
+.ep .t{flex:1}.ep small{color:var(--muted);display:block;font-size:12px}
+.mini{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:8px;padding:7px 11px;font-size:13px;cursor:pointer;margin:6px 0}
+.row{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px;margin-bottom:8px;cursor:pointer}
+.row img,.row .ph{width:52px;height:78px;aspect-ratio:auto;border-radius:6px;flex:none;font-size:20px}
+.row .b{flex:1;min-width:0}.row .t{font-family:Georgia,serif;font-size:16px}
+.row.done .t{text-decoration:line-through;color:var(--muted)}
+.chk{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:none;color:#fff;cursor:pointer;flex:none}
+.row.done .chk{background:var(--accent);border-color:var(--accent)}
+.small{font-size:11px;color:var(--muted);text-align:center;margin-top:24px;line-height:1.5}
+</style>
+</head>
+<body>
+<header><div class="logo">K</div><h1>k3v.1</h1><button class="gear" id="gear" aria-label="Settings">⚙︎</button></header>
+<main id="main"></main>
+<nav id="nav">
+  <button data-v="disc" class="on"><b>🔥</b>Discover</button>
+  <button data-v="search"><b>🔍</b>Search</button>
+  <button data-v="list"><b>🍿</b>My List</button>
+</nav>
+<div class="sheet" id="sheet"><div class="sin" id="sin"></div></div>
+
+<script>
+(function(){
+  var IMG='https://image.tmdb.org/t/p/', $=function(i){return document.getElementById(i);};
+  var KEY=localStorage.getItem('k3v_key')||'', list=[], view='disc', cat='trend', lfilter='todo', cur=null, openS=null, sq='';
+  try{ list=JSON.parse(localStorage.getItem('k3v_list')||'[]'); }catch(e){}
+  function save(){ try{ localStorage.setItem('k3v_list',JSON.stringify(list)); }catch(e){} }
+  function esc(s){ var d=document.createElement('div'); d.textContent=(s==null?'':s); return d.innerHTML; }
+  function fmt(d){ if(!d) return 'TBA'; var x=new Date(d+'T00:00:00'); return isNaN(x)?d:x.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }
+  function todayStr(){ var n=new Date(); return n.getFullYear()+'-'+('0'+(n.getMonth()+1)).slice(-2)+'-'+('0'+n.getDate()).slice(-2); }
+
+  function api(path,params){
+    var u=new URL('https://api.themoviedb.org/3'+path), h={};
+    if(KEY.length>40) h.Authorization='Bearer '+KEY; else u.searchParams.set('api_key',KEY);
+    u.searchParams.set('language','en-US');
+    Object.keys(params||{}).forEach(function(k){ u.searchParams.set(k,params[k]); });
+    return fetch(u.toString(),{headers:h}).then(function(r){
+      if(r.status===401) throw new Error('Your TMDB API key was rejected. Check it in Settings (⚙︎).');
+      if(!r.ok) throw new Error('Could not reach TMDB ('+r.status+').');
+      return r.json();
+    }).catch(function(e){ if(e instanceof TypeError) throw new Error('No internet connection.'); throw e; });
+  }
+  function norm(r,defType){
+    var type=r.media_type||defType||(r.title?'movie':'tv');
+    return {key:type+'-'+r.id,id:r.id,type:type,title:r.title||r.name||'Untitled',date:r.release_date||r.first_air_date||'',poster:r.poster_path||'',overview:r.overview||'',vote:r.vote_average||0,my:0,done:false,seen:{}};
+  }
+  function inList(o){ return list.filter(function(i){return i.key===o.key;})[0]; }
+  function pimg(o,sz){ return o.poster?'<img loading="lazy" src="'+IMG+sz+o.poster+'" alt="">':'<div class="ph">'+(o.type==='tv'?'📺':'🎬')+'</div>'; }
+  function cards(arr){
+    if(!arr.length) return '<div class="msg">Nothing found.</div>';
+    return '<div class="grid">'+arr.map(function(o,i){
+      return '<div class="card" data-i="'+i+'">'+pimg(o,'w342')+'<div class="t">'+esc(o.title)+'</div><div class="d">'+esc(fmt(o.date))+'</div>'+(o.vote?'<div class="v">★ '+o.vote.toFixed(1)+'</div>':'')+'</div>';
+    }).join('')+'</div>';
+  }
+
+  var CATS=[['trend','Trending','/trending/all/week',null],['now','In theaters','/movie/now_playing','movie'],['up','Coming soon','/movie/upcoming','movie'],['air','TV on the air','/tv/on_the_air','tv'],['pop','Popular TV','/tv/popular','tv']];
+  var shown=[];
+
+  function needKey(){
+    $('main').innerHTML='<div class="msg"><h3>Connect to TMDB</h3>This app gets live movie and TV data from TMDB. Paste your free API key (or Read Access Token) to start.<br><br><a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener" style="color:var(--accent)">Get a free key ↗</a><br><br><input type="password" id="kin" placeholder="TMDB API key" autocomplete="off"><br><br><button class="btn" id="ksave">Save key</button></div>';
+    $('ksave').onclick=function(){ var v=$('kin').value.trim(); if(v){ KEY=v; localStorage.setItem('k3v_key',v); go(); } };
+  }
+
+  function go(){
+    [].forEach.call($('nav').children,function(b){ b.classList.toggle('on',b.dataset.v===view); });
+    if(!KEY){ needKey(); return; }
+    if(view==='disc') discover(); else if(view==='search') searchView(); else listView();
+  }
+
+  function discover(){
+    $('main').innerHTML='<div class="chips" id="chips">'+CATS.map(function(c){return '<button data-c="'+c[0]+'" class="'+(c[0]===cat?'on':'')+'">'+c[1]+'</button>';}).join('')+'</div><div id="out"><div class="msg">Loading…</div></div>';
+    var c=CATS.filter(function(x){return x[0]===cat;})[0];
+    api(c[2]).then(function(d){
+      shown=(d.results||[]).filter(function(r){return !r.media_type||r.media_type==='movie'||r.media_type==='tv';}).map(function(r){return norm(r,c[3]);});
+      if(cat==='up'){ var t=todayStr(); shown=shown.filter(function(o){return o.date>=t;}).sort(function(a,b){return a.date<b.date?-1:1;}); }
+      $('out').innerHTML=cards(shown);
+    }).catch(function(e){ $('out').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
+  }
+
+  function searchView(){
+    $('main').innerHTML='<div style="padding-top:10px"><input type="text" id="si" placeholder="Search movies & TV shows…" value="'+esc(sq)+'"></div><div id="out"><div class="msg">Type a title and press Enter.</div></div>';
+    $('si').onkeydown=function(e){ if(e.key==='Enter') doSearch(); };
+    if(sq) doSearch(); 
+  }
+  function doSearch(){
+    sq=$('si').value.trim(); if(!sq) return;
+    $('out').innerHTML='<div class="msg">Searching…</div>';
+    api('/search/multi',{query:sq,include_adult:'false'}).then(function(d){
+      shown=(d.results||[]).filter(function(r){return r.media_type==='movie'||r.media_type==='tv';}).map(function(r){return norm(r);});
+      $('out').innerHTML=cards(shown);
+    }).catch(function(e){ $('out').innerHTML='<div class="msg err">'+esc(e.message)+'</div>'; });
+  }
+
+  function listView(){
+    var todo=list.filter(function(i){return !i.done;}).length;
+    var arr=list.filter(function(i){return lfilter==='all'||(lfilter==='done')===!!i.done;});
+    $('main').innerHTML='<div class="chips" id="lchips">'+[['todo','To watch ('+todo+')'],['done','Watched ('+(list.length-todo)+')'],['all','All']].map(function(c){return '<button data-l="'+c[0]+'" class="'+(c[0]===lfilter?'on':'')+'">'+c[1]+'</button>';}).join('')+'</div>'+
+      (arr.length?arr.map(function(o){
+        var prog=o.type==='tv'&&o.eps?'<div class="meta">'+Object.keys(o.seen||{}).length+' / '+o.eps+' episodes watched</div>':'';
+        return '<div class="row'+(o.done?' done':'')+'" data-k="'+o.key+'">'+pimg(o,'w185')+'<div class="b"><div class="t">'+esc(o.title)+'</div><div class="meta"><span class="badge">'+(o.type==='tv'?'TV':'Movie')+'</span>'+esc(fmt(o.date))+'</div>'+prog+(o.my?'<div class="star">'+'★'.repeat(o.my)+'</div>':'')+'</div><button class="chk" data-a="tog" aria-label="Toggle watched">'+(o.done?'✓':'')+'</button></div>';
+      }).join(''):'<div class="msg">Nothing here yet. Find something in Discover or Search.</div>');
+  }
+
+  /* ---------- detail ---------- */
+  function detail(){
+    var sh=$('sheet'), top=sh.scrollTop, o=cur, ex=o.x||{}, mine=inList(o), h='';
+    h+='<button class="back" data-a="close">‹ Back</button><div class="hero">'+pimg(o,'w500')+'<h2>'+esc(o.title)+'</h2><div class="meta"><span class="badge">'+(o.type==='tv'?'TV Show':'Movie')+'</span>'+(o.vote?'<span class="star">★ '+o.vote.toFixed(1)+'</span> · ':'')+esc(fmt(o.date))+'</div>';
+    var bits=[]; if(ex.genres&&ex.genres.length) bits.push(ex.genres.map(function(g){return g.name;}).join(', ')); if(ex.runtime) bits.push(ex.runtime+' min'); if(o.type==='tv'&&ex.number_of_seasons) bits.push(ex.number_of_seasons+' seasons · '+ex.number_of_episodes+' episodes'); if(ex.status) bits.push(ex.status);
+    if(bits.length) h+='<div class="meta" style="margin-top:4px">'+esc(bits.join(' · '))+'</div>';
+    h+='</div><p class="o">'+esc(o.overview||'No description available.')+'</p><div class="btns">';
+    h+= mine ? '<button class="btn" data-a="watched">'+(mine.done?'Move back to watchlist':'Mark as watched')+'</button>' : '<button class="btn" data-a="add">+ Add to watchlist</button>';
+    var tr=trailerUrl(o); h+='<a class="btn g" href="'+tr+'" target="_blank" rel="noopener">▶ Watch trailer on YouTube</a>';
+    if(mine) h+='<button class="btn g" data-a="remove">Remove from list</button>';
+    h+='</div>';
+    if(mine){ h+='<div class="stars">'; for(var n=1;n<=5;n++) h+='<button data-a="star" data-n="'+n+'" class="'+(n<=(mine.my||0)?'on':'')+'">★</button>'; h+='</div>'; }
+    if(o.type==='tv'&&ex.seasons){
+      h+='<h3>Seasons & episodes</h3>';
+      ex.seasons.forEach(function(s){
+        var open=openS===s.season_number, seen=seenIn(mine||o,s.season_number);
+        h+='<div class="season"><div class="sh" data-a="season" data-s="'+s.season_number+'"><div><b>'+esc(s.name||('Season '+s.season_number))+'</b><div class="meta">'+s.episode_count+' episodes'+(s.air_date?' · '+esc(fmt(s.air_date)):'')+'</div></div><div class="meta">'+(mine?seen+'/'+s.episode_count+' ':'')+(open?'▴':'▾')+'</div></div>';
+        if(open){
+          h+='<div class="eps">';
+          var eps=(o.seasonData||{})[s.season_number];
+          if(!eps) h+='<div class="meta">Loading episodes…</div>';
+          else {
+            if(mine) h+='<button class="mini" data-a="seasonall" data-s="'+s.season_number+'">'+(seen>=eps.length?'Clear season':'Mark season watched')+'</button>';
+            var t=todayStr();
+            eps.forEach(function(e){
+              h+='<label class="ep">'+(mine?'<input type="checkbox" data-a="ep" data-s="'+s.season_number+'" data-e="'+e.episode_number+'"'+(mine.seen&&mine.seen[s.season_number+'-'+e.episode_number]?' checked':'')+'>':'')+'<span class="t">E'+e.episode_number+' · '+esc(e.name)+'<small>'+(e.air_date?esc(fmt(e.air_date))+(e.air_date>t?' · upcoming':''):'Date TBA')+(e.runtime?' · '+e.runtime+' min':'')+'</small></span></label>';
+            });
+          }
+          h+='</div>';
+        }
+        h+='</div>';
+      });
+    }
+    h+='<div class="small">This product uses the TMDB API but is not endorsed or certified by TMDB.</div>';
+    $('sin').innerHTML=h; sh.scrollTop=top;
+  }
+  function seenIn(o,n){ var c=0; Object.keys(o.seen||{}).forEach(function(k){ if(k.indexOf(n+'-')===0) c++; }); return c; }
+  function trailerUrl(o){
+    var v=((o.x||{}).videos||{}).results||[];
+    var t=v.filter(function(x){return x.site==='YouTube'&&x.type==='Trailer';}).sort(function(a,b){return (b.official?1:0)-(a.official?1:0);})[0]||v.filter(function(x){return x.site==='YouTube';})[0];
+    return t?'https://www.youtube.com/watch?v='+t.key:'https://www.youtube.com/results?search_query='+encodeURIComponent(o.title+' '+(o.date||'').slice(0,4)+' official trailer');
+  }
+  function open(o){
+    var mine=inList(o); cur=mine||o; openS=null; $('sheet').classList.add('open'); $('sheet').scrollTop=0; detail();
+    api('/'+cur.type+'/'+cur.id,{append_to_response:'videos'}).then(function(d){
+      cur.x={genres:d.genres,runtime:d.runtime||(d.episode_run_time&&d.episode_run_time[0]),status:d.status,number_of_seasons:d.number_of_seasons,number_of_episodes:d.number_of_episodes,seasons:d.seasons,videos:d.videos};
+      if(d.overview&&!cur.overview) cur.overview=d.overview;
+      if(cur.type==='tv'){ cur.eps=d.number_of_episodes; }
+      if(inList(cur)) save(); detail();
+    }).catch(function(e){ $('sin').insertAdjacentHTML('afterbegin','<div class="msg err">'+esc(e.message)+'</div>'); });
+  }
+  function loadSeason(n){
+    api('/tv/'+cur.id+'/season/'+n).then(function(d){
+      cur.seasonData=cur.seasonData||{}; cur.seasonData[n]=(d.episodes||[]).map(function(e){return {episode_number:e.episode_number,name:e.name,air_date:e.air_date,runtime:e.runtime};});
+      detail();
+    }).catch(function(){ cur.seasonData=cur.seasonData||{}; cur.seasonData[n]=[]; detail(); });
+  }
+  function persist(){ var m=inList(cur); if(m){ m.x=cur.x; m.seasonData=cur.seasonData; m.eps=cur.eps; save(); } }
+
+  /* ---------- events ---------- */
+  $('nav').onclick=function(e){ var b=e.target.closest('button'); if(b){ view=b.dataset.v; go(); } };
+  $('gear').onclick=function(){ var k=prompt('TMDB API key / Read Access Token:',KEY); if(k!==null){ KEY=k.trim(); localStorage.setItem('k3v_key',KEY); go(); } };
+  $('main').onclick=function(e){
+    var c=e.target.closest('[data-c]'); if(c){ cat=c.dataset.c; discover(); return; }
+    var l=e.target.closest('[data-l]'); if(l){ lfilter=l.dataset.l; listView(); return; }
+    var card=e.target.closest('.card'); if(card){ open(shown[+card.dataset.i]); return; }
+    var row=e.target.closest('.row'); if(row){
+      var o=list.filter(function(i){return i.key===row.dataset.k;})[0]; if(!o) return;
+      if(e.target.closest('[data-a="tog"]')){ o.done=!o.done; save(); listView(); } else open(o);
+    }
+  };
+  $('sheet').onclick=function(e){
+    var b=e.target.closest('[data-a]'); if(!b) return; var a=b.dataset.a, n=+b.dataset.s, m=inList(cur);
+    if(a==='close'){ $('sheet').classList.remove('open'); go(); return; }
+    if(a==='add'){ cur.my=0; cur.done=false; cur.seen=cur.seen||{}; list.unshift(cur); save(); detail(); }
+    else if(a==='watched'){ m.done=!m.done; save(); detail(); }
+    else if(a==='remove'){ list=list.filter(function(i){return i.key!==cur.key;}); save(); $('sheet').classList.remove('open'); go(); }
+    else if(a==='star'){ var v=+b.dataset.n; m.my=(m.my===v?0:v); save(); detail(); }
+    else if(a==='season'){ if(openS===n){ openS=null; detail(); } else { openS=n; detail(); if(!(cur.seasonData||{})[n]) loadSeason(n); } }
+    else if(a==='seasonall'){ var eps=cur.seasonData[n]||[], all=seenIn(m,n)>=eps.length; m.seen=m.seen||{}; eps.forEach(function(x){ var k=n+'-'+x.episode_number; if(all) delete m.seen[k]; else m.seen[k]=true; }); save(); detail(); }
+    else if(a==='ep'){ m.seen=m.seen||{}; var key=n+'-'+b.dataset.e; if(b.checked) m.seen[key]=true; else delete m.seen[key]; save(); detail(); }
+    if(a==='add'||a==='season') persist();
+  };
+
+  if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){ navigator.serviceWorker.register('sw.js').catch(function(){}); }
+  go();
+})();
+</script>
+</body>
+</html>

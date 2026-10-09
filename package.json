@@ -1,0 +1,14 @@
+{
+  "name": "k3v1",
+  "version": "1.0.0",
+  "private": true,
+  "description": "k3v.1 - movie and TV watchlist powered by TMDB",
+  "dependencies": {
+    "@capacitor/android": "^6.1.2",
+    "@capacitor/core": "^6.1.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^6.1.2"
+  }
+}

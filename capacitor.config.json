@@ -1,0 +1,6 @@
+{
+  "appId": "com.k3v.app",
+  "appName": "k3v.1",
+  "webDir": "www",
+  "server": { "androidScheme": "https" }
+}
